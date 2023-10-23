@@ -1562,6 +1562,19 @@ func (db *DB) startMemoryFlush() {
 	}
 }
 
+func (db *DB) CompactLevel0() {
+	err := db.lc.doCompact(176, compactionPriority{level: 0, score: 1.76})
+	switch err {
+	case errFillTables:
+		// This error only means that there might be enough tables to do a compaction. So, we
+		// should not report it to the end user to avoid confusing them.
+	case nil:
+		db.opt.Debugf("Force compaction on level 0 done")
+	default:
+		db.opt.Warningf("While forcing compaction on level 0: %v", err)
+	}
+}
+
 // Flatten can be used to force compactions on the LSM tree so all the tables fall on the same
 // level. This ensures that all the versions of keys are colocated and not split across multiple
 // levels, which is necessary after a restore from backup. During Flatten, live compactions are

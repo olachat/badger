@@ -1576,7 +1576,7 @@ func (db *DB) CompactLevel0() {
 			// This error only means that there might be enough tables to do a compaction. So, we
 			// should not report it to the end user to avoid confusing them.
 		case nil:
-			db.opt.Debugf("Force compaction on level 0 done")
+			db.opt.Infof("Force compaction on level 0 done")
 		default:
 			db.opt.Warningf("While forcing compaction on level 0: %v", err)
 		}

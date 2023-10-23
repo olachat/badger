@@ -1547,7 +1547,7 @@ func (s *levelsController) doCompact(id int, p compactionPriority) error {
 		return err
 	}
 
-	s.kv.opt.Debugf("[Compactor: %d] Compaction for level: %d DONE", id, cd.thisLevel.level)
+	s.kv.opt.Infof("[Compactor: %d] Compaction for level: %d DONE", id, cd.thisLevel.level)
 	return nil
 }
 
